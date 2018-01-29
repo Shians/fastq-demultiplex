@@ -1,0 +1,17 @@
+{
+    "cSpell.words": [
+        "demultiplex",
+        "fastq",
+        "kseq",
+        "tclap"
+    ],
+    "files.associations": {
+        "typeinfo": "cpp",
+        "iosfwd": "cpp",
+        "unordered_map": "cpp",
+        "array": "cpp",
+        "slist": "cpp",
+        "initializer_list": "cpp",
+        "iostream": "cpp"
+    }
+}
