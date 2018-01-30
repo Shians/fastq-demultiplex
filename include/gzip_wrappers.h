@@ -1,5 +1,5 @@
 #pragma once
-#include <stddef>
+#include <cstddef>
 #include <zlib.h>
 #include <string>
 
