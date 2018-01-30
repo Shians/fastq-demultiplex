@@ -20,7 +20,7 @@ all: build
 build: dist/$(PROG_NAME)
 
 test:
-	mkdir -p output
+	mkdir -p test/output
 	dist/$(PROG_NAME) $(PROG_ARGS)
 
 dist/$(PROG_NAME) : $(objects)
@@ -32,4 +32,4 @@ src/%.o : %.c
 
 clean:
 	rm -f src/*.o
-	rm -rf output
+	rm -rf test/output
