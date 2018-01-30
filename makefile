@@ -1,3 +1,5 @@
+prefix ?= /usr/local
+
 PROG_NAME = paired_fastq_demultiplex
 
 TEST_ARGS = --bc "test/data/sample_index.csv" \
@@ -20,7 +22,7 @@ vpath %.h include
 files := $(notdir $(wildcard src/*.cpp))
 objects := $(addprefix src/,$(files:%.cpp=%.o))
 
-.PHONY: all build test clean
+.PHONY: all build test install clean
 
 all: build
 
@@ -36,6 +38,9 @@ bin/$(PROG_NAME) : $(objects)
 
 src/%.o : %.c
 	$(CXX) $(CPPFLAGS) -c -o $@ $< $(LIBS)
+
+install:
+	install bin/$(PROG_NAME) $(prefix)/bin/$(PROG_NAME)
 
 clean:
 	rm -f src/*.o
