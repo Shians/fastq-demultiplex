@@ -52,6 +52,7 @@ void demultiplex(vector<string> barcodes, options_t PRG_OPTS) {
         }
     } while (record1.good && record2.good);
 
+    files.close_all();
     undetermined1.close();
     undetermined2.close();
 

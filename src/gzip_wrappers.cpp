@@ -14,27 +14,11 @@ GzipFile::GzipFile(std::string filename) {
 }
 
 void GzipFile::close() {
-    std::string buf = "";
-    if (_print_queue.size() > 0) {
-        while (_print_queue.size() > 0) {
-            buf += _print_queue.front();
-            _print_queue.pop();
-        }
-        gzprintf(_fp, "%s", buf.c_str());
-    }
     gzip_close(_fp, _filename);
 }
 
 void GzipFile::write(std::string s) {
-    _print_queue.push(s);
-    if (_print_queue.size() > 256) {
-        std::string buf = "";
-        while (_print_queue.size() > 0) {
-            buf += _print_queue.front();
-            _print_queue.pop();
-        }
-        gzprintf(_fp, "%s", buf.c_str());
-    }
+    gzprintf(_fp, "%s", s.c_str());
 }
 
 GzipFiles::GzipFiles(std::vector<std::string> barcodes, std::string outdir) {
@@ -50,7 +34,7 @@ GzipFiles::GzipFiles(std::vector<std::string> barcodes, std::string outdir) {
     }
 }
 
-GzipFiles::~GzipFiles() {
+void GzipFiles::close_all() {
     for (int i = 0; i < _keys.size(); i++) {
         _files1[i].close();
         _files2[i].close();
