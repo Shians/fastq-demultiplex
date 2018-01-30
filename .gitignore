@@ -1,5 +1,5 @@
 output
-data
 dist/*
 
 *.o
+.DS_Store
