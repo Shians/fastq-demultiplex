@@ -15,6 +15,8 @@ void demultiplex(
     std::string outdir = PRG_OPTS.outdir;
     
     GzipFiles files(barcodes);
+    GzipFile undetermined1(outdir + "/Undetermined_R1.fastq.gz");
+    GzipFile undetermined2(outdir + "/Undetermined_R2.fastq.gz");
 
     Fastq_file fq1(r1);
     Fastq_file fq2(r2);
@@ -42,6 +44,9 @@ void demultiplex(
         if (binary_search(barcodes.begin(), barcodes.end(), barcode)) {
             files.get_file1(barcode).write(record1.str());
             files.get_file2(barcode).write(record2.str());
+        } else {
+            undetermined1.write(record1.str());
+            undetermined2.write(record2.str());
         }
 
         records_processed++;
