@@ -27,3 +27,7 @@ std::string Timer::elapsed() {
 void Timer::mode(std::string mode) {
 	_time_mode = mode;
 }
+
+void Timer::print_elapsed() {
+    std::cout << "Time elapsed: " << this->elapsed() << std::endl;
+}

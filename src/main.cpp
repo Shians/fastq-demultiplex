@@ -7,16 +7,15 @@ int main(int argc, char* argv[]) {
     check_args();
     print_args();
 
-    Timer timer;
+    Timer timer("minutes");
     timer.start();
-    timer.mode("minutes");
 
     vector<string> barcodes = read_barcodes(PRG_OPTS.bc);
     sort(barcodes.begin(), barcodes.end());
 
     demultiplex(barcodes, PRG_OPTS);
 
-    std::cout << "Time elapsed: " << timer.elapsed() << std::endl;
+    timer.print_elapsed();
 
     return 0;
 }
