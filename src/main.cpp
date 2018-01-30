@@ -57,6 +57,7 @@ void demultiplex_fastq(
 
 int main(int argc, char* argv[]) {
     parse_args(argc, argv);
+    check_args();
 
     cout << "Barcodes:" << PRG_OPTS.bc << "\n";
     cout << "R1 file: " << PRG_OPTS.r1 << "\n";

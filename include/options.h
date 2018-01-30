@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <tclap/CmdLine.h>
+#include <boost/filesystem.hpp>
 
 struct options_t {
     std::string bc;
@@ -40,5 +41,29 @@ void parse_args(int &argc, char *argv[]) {
         PRG_OPTS.r1 = r1.getValue();
 	} catch (TCLAP::ArgException &e) {
         throw e;
+    }
+}
+
+void check_args() {
+    bool files_missing = false;
+    bool folders_missing = false;
+    
+    if (!boost::filesystem::exists(PRG_OPTS.r1)) {
+        std::cerr << "R1 does not exist" << std::endl;
+        files_missing = true;
+    }
+
+    if (!boost::filesystem::exists(PRG_OPTS.r2)) {
+        std::cerr << "R2 doest no exist" << std::endl;
+        files_missing = true;
+    }
+
+    if (!boost::filesystem::is_directory(PRG_OPTS.outdir)) {
+        std::cerr << "output directory does not exist" << std::endl;
+        folders_missing = true;
+    }
+
+    if (files_missing || folders_missing) {
+        exit(EXIT_FAILURE);
     }
 }
