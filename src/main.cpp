@@ -65,7 +65,6 @@ void demultiplex_fastq(
         records_processed++;
         if (records_processed % 500000 == 0) {
             cout << records_processed << " records processed..." << "\n";
-            cout << record1.str() << "\n";
         }
     } while (record1.good && record2.good);
 
@@ -75,15 +74,7 @@ void demultiplex_fastq(
 int main(int argc, char* argv[]) {
     parse_args(argc, argv);
     check_args();
-
-    cout << "Barcodes:" << PRG_OPTS.bc << "\n";
-    cout << "R1 file: " << PRG_OPTS.r1 << "\n";
-    cout << "R2 file: " << PRG_OPTS.r2 << "\n";
-    cout << "Barcode range: " 
-         << PRG_OPTS.bc_start << " to " << PRG_OPTS.bc_end 
-         << " (" << PRG_OPTS.bc_end - PRG_OPTS.bc_start + 1 << " bases)"
-         << " in " << (PRG_OPTS.r2_bc ? "R2" : "R1") << "\n";
-    cout << "Output dir: " << PRG_OPTS.outdir << "\n";
+    print_args();
 
     vector<string> barcodes = read_barcodes(PRG_OPTS.bc);
     sort(barcodes.begin(), barcodes.end());

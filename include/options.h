@@ -67,3 +67,14 @@ void check_args() {
         exit(EXIT_FAILURE);
     }
 }
+
+void print_args() {
+    std::cout << "Barcodes:" << PRG_OPTS.bc << "\n";
+    std::cout << "R1 file: " << PRG_OPTS.r1 << "\n";
+    std::cout << "R2 file: " << PRG_OPTS.r2 << "\n";
+    std::cout << "Barcode range: " 
+        << PRG_OPTS.bc_start << " to " << PRG_OPTS.bc_end 
+        << " (" << PRG_OPTS.bc_end - PRG_OPTS.bc_start + 1 << " bases)"
+        << " in " << (PRG_OPTS.r2_bc ? "R2" : "R1") << "\n";
+    std::cout << "Output dir: " << PRG_OPTS.outdir << "\n";
+}
