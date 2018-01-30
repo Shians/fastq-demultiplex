@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <zlib.h>
 #include <string>
+#include <queue>
 
 #include "options.h"
 
@@ -16,11 +17,25 @@ class GzipFile {
             gzclose(_fp);
         }
 
+        void flush() {
+            std::string buf = "";
+            while (_print_queue.size() > 0) {
+                buf += _print_queue.front() + "\n";
+                _print_queue.pop();
+            }
+            gzprintf(_fp, "%s", buf.c_str());
+        }
+
         void write(std::string s) {
-            gzprintf(_fp, "%s", s.c_str());
+            if (_print_queue.size() < 256) {
+                _print_queue.push(s);
+            } else {
+                this->flush();
+            }
         }
     private:
         gzFile _fp;
+        std::queue<std::string> _print_queue;
 };
 
 class GzipFiles {

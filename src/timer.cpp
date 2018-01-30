@@ -10,7 +10,10 @@ std::string Timer::elapsed() {
 	_end_time = steady_clock::now();
 	std::string elapsed_string;
 	
-	if (_time_mode == "seconds") {
+	if (_time_mode == "milliseconds") {
+		milliseconds elapsed_time = duration_cast<milliseconds>(_end_time - _start_time);
+		elapsed_string = std::to_string(elapsed_time.count()) + " milliseconds";
+    } else if (_time_mode == "seconds") {
 		seconds elapsed_time = duration_cast<seconds>(_end_time - _start_time);
 		elapsed_string = std::to_string(elapsed_time.count()) + " seconds";
 	} else if (_time_mode == "minutes") {

@@ -16,13 +16,12 @@ class Fastq_record {
         std::string qual;
         bool good;
 
-        friend std::ostream& operator<<(std::ostream& os, const Fastq_record& obj)
-            {
-                os << "@" << obj.name << " " << obj.comment << "\n"
-                   << obj.seq << "\n"
-                   << "+" << "\n"
-                   << obj.qual << "\n";
-                return os;
+        friend std::ostream& operator<<(std::ostream& os, const Fastq_record& obj) {
+            os << "@" << obj.name << " " << obj.comment << "\n"
+                << obj.seq << "\n"
+                << "+" << "\n"
+                << obj.qual << "\n";
+            return os;
         }
 
         std::string str() {
