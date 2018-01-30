@@ -52,12 +52,8 @@ void demultiplex(vector<string> barcodes, options_t PRG_OPTS) {
         }
     } while (record1.good && record2.good);
 
-    for (string &bc : barcodes) {
-        files.get_file1(bc).flush();
-        files.get_file2(bc).flush();
-    }
-    undetermined1.flush();
-    undetermined2.flush();
+    undetermined1.close();
+    undetermined2.close();
 
     std::cout << records_processed << " total records processed" << "\n";
 }

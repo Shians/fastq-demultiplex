@@ -14,23 +14,26 @@ GzipFile::GzipFile(std::string filename) {
 }
 
 void GzipFile::close() {
+    std::string buf = "";
+    if (_print_queue.size() > 0) {
+        while (_print_queue.size() > 0) {
+            buf += _print_queue.front();
+            _print_queue.pop();
+        }
+        gzprintf(_fp, "%s", buf.c_str());
+    }
     gzip_close(_fp, _filename);
 }
 
- void GzipFile::flush() {
-    std::string buf = "";
-    while (_print_queue.size() > 0) {
-        buf += _print_queue.front() + "\n";
-        _print_queue.pop();
-    }
-    gzprintf(_fp, "%s", buf.c_str());
-}
-
 void GzipFile::write(std::string s) {
-    if (_print_queue.size() < 256) {
-        _print_queue.push(s);
-    } else {
-        this->flush();
+    _print_queue.push(s);
+    if (_print_queue.size() > 256) {
+        std::string buf = "";
+        while (_print_queue.size() > 0) {
+            buf += _print_queue.front();
+            _print_queue.pop();
+        }
+        gzprintf(_fp, "%s", buf.c_str());
     }
 }
 

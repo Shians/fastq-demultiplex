@@ -1,8 +1,10 @@
 #pragma once
+#include <iostream>
 #include <cstddef>
 #include <zlib.h>
 #include <string>
 #include <queue>
+#include <algorithm>
 
 gzFile gzip_open(std::string filename, std::string mode);
 void gzip_close(gzFile file);
@@ -12,7 +14,6 @@ class GzipFile {
         GzipFile(std::string filename);
 
         void close();
-        void flush();
         void write(std::string s);
     private:
         gzFile _fp;
