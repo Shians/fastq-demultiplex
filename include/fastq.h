@@ -14,6 +14,7 @@ class Fastq_record {
         std::string comment;
         std::string seq;
         std::string qual;
+        bool good;
 
         friend std::ostream& operator<<(std::ostream& os, const Fastq_record& obj)
             {
@@ -56,7 +57,7 @@ class Fastq_file {
     public:
         Fastq_file(std::string filename) {
             _filename = filename;
-            std::cout << "...reading from " << filename << "\n";
+            std::cout << "reading from " << filename << "\n";
             _fp = gzopen(_filename.c_str(), "r");
             _seq = kseq_init(_fp);
         }
@@ -68,16 +69,16 @@ class Fastq_file {
 
         Fastq_record get_record(void) {
             Fastq_record record;
-            kseq_read(_seq);
+            int l = kseq_read(_seq);
 
             record.name = _seq->name.s;
             record.comment = _seq->comment.s;
             record.seq = _seq->seq.s;
             record.qual = _seq->qual.s;
+            record.good = (l >= 0);
 
             return record;
         }
-
     private:
         std::string _filename;
         gzFile _fp;

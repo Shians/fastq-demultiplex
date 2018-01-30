@@ -12,6 +12,8 @@
         "array": "cpp",
         "slist": "cpp",
         "initializer_list": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "*.tcc": "cpp",
+        "istream": "cpp"
     }
 }

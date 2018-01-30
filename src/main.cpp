@@ -37,9 +37,18 @@ void demultiplex_fastq(
     Fastq_file fq1(r1);
     Fastq_file fq2(r2);
 
-    for (int i = 0; i < 1000; i++) {
-        Fastq_record record1 = fq1.get_record();
-        Fastq_record record2 = fq2.get_record();
+    unsigned long records_processed = 0;
+
+    Fastq_record record1;
+    Fastq_record record2;
+
+    do {
+        record1 = fq1.get_record();
+        record2 = fq2.get_record();
+
+        if (!record1.good || !record2.good) {
+            break;
+        }
 
         string barcode;
         if (!r2_bc) {
@@ -52,7 +61,15 @@ void demultiplex_fastq(
             files.get_file1(barcode).write(record1.str());
             files.get_file2(barcode).write(record2.str());
         }
-    }
+
+        records_processed++;
+        if (records_processed % 500000 == 0) {
+            cout << records_processed << " records processed..." << "\n";
+            cout << record1.str() << "\n";
+        }
+    } while (record1.good && record2.good);
+
+    cout << records_processed << " total records processed" << "\n";
 }
 
 int main(int argc, char* argv[]) {
