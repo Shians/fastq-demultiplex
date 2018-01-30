@@ -22,9 +22,12 @@ vpath %.h include
 files := $(notdir $(wildcard src/*.cpp))
 objects := $(addprefix src/,$(files:%.cpp=%.o))
 
-.PHONY: all build test install clean
+.PHONY: all debug build test install clean
 
 all: build
+
+debug: CPPFLAGS = -Wall -std=c++11 -I./include -Wno-unused-function -Wno-sign-compare -pg -D_DEBUG
+debug: build
 
 build: bin/$(PROG_NAME)
 
