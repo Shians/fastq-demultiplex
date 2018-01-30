@@ -8,22 +8,21 @@
 
 class GzipFile {
     public:
-        GzipFile(std::string filename) : GzipFile(filename, "w") {}
-        GzipFile(std::string filename, std::string mode) {
-            _fp = gzopen(filename.c_str(), mode.c_str());
-        }
-
-        void close() {
+        GzipFile(std::string filename) {
+            _filename = filename;
+            _fp = gzopen(filename.c_str(), "w");
             gzclose(_fp);
         }
 
         void flush() {
+            _fp = gzopen(_filename.c_str(), "a");
             std::string buf = "";
             while (_print_queue.size() > 0) {
                 buf += _print_queue.front() + "\n";
                 _print_queue.pop();
             }
             gzprintf(_fp, "%s", buf.c_str());
+            gzclose(_fp);
         }
 
         void write(std::string s) {
@@ -35,6 +34,7 @@ class GzipFile {
         }
     private:
         gzFile _fp;
+        std::string _filename;
         std::queue<std::string> _print_queue;
 };
 
@@ -47,15 +47,8 @@ class GzipFiles {
                 std::string r1_name = make_r1_name(_keys[i]);
                 std::string r2_name = make_r2_name(_keys[i]);
 
-                _files1.push_back(GzipFile(r1_name, "w"));
-                _files2.push_back(GzipFile(r2_name, "w"));
-            }
-        }
-
-        ~GzipFiles() {
-            for (int i = 0; i < _keys.size(); i++) {
-                _files1[i].close();
-                _files2[i].close();
+                _files1.push_back(GzipFile(r1_name));
+                _files2.push_back(GzipFile(r2_name));
             }
         }
 
