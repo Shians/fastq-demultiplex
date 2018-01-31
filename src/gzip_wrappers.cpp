@@ -23,7 +23,7 @@ void GzipFile::write(string s) {
     gzprintf(_fp, "%s", s.c_str());
 }
 
-GzipFiles::GzipFiles(std::vector<string> barcodes, string outdir) {
+OutputPairs::OutputPairs(std::vector<string> barcodes, string outdir) {
     _keys = barcodes;
     _outdir = outdir;
 
@@ -36,21 +36,21 @@ GzipFiles::GzipFiles(std::vector<string> barcodes, string outdir) {
     }
 }
 
-void GzipFiles::close_all() {
+void OutputPairs::close_all() {
     for (int i = 0; i < _keys.size(); i++) {
         _files1[i].close();
         _files2[i].close();
     }
 }
 
-void GzipFiles::write_file1(string barcode, string s) {
+void OutputPairs::write_file1(string barcode, string s) {
     auto it = find(_keys.begin(), _keys.end(), barcode);
     ptrdiff_t i = it - _keys.begin();
 
     _files1[i].write(s);
 }
 
-void GzipFiles::write_file2(string barcode, string s) {
+void OutputPairs::write_file2(string barcode, string s) {
     auto it = find(_keys.begin(), _keys.end(), barcode);
     ptrdiff_t i = it - _keys.begin();
 

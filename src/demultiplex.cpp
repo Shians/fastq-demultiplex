@@ -11,7 +11,7 @@ void demultiplex(vector<string> barcodes, options_t PRG_OPTS) {
     bool r2_bc = PRG_OPTS.r2_bc;
     string outdir = PRG_OPTS.outdir;
     
-    GzipFiles files(barcodes, PRG_OPTS.outdir);
+    OutputPairs files(barcodes, PRG_OPTS.outdir);
     GzipFile undetermined1(outdir + "/Undetermined_R1.fastq.gz");
     GzipFile undetermined2(outdir + "/Undetermined_R2.fastq.gz");
 

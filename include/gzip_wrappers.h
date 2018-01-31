@@ -18,12 +18,11 @@ class GzipFile {
     private:
         gzFile _fp;
         std::string _filename;
-        std::queue<std::string> _print_queue;
 };
 
-class GzipFiles {
+class OutputPairs {
     public:
-        GzipFiles(std::vector<std::string> barcodes, std::string outdir);
+        OutputPairs(std::vector<std::string> barcodes, std::string outdir);
 
         void close_all();
         void write_file1(std::string barcode, std::string s);
