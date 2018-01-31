@@ -43,17 +43,17 @@ void GzipFiles::close_all() {
     }
 }
 
-GzipFile GzipFiles::get_file1(string barcode) {
+void GzipFiles::write_file1(string barcode, string s) {
     auto it = find(_keys.begin(), _keys.end(), barcode);
     ptrdiff_t i = it - _keys.begin();
 
-    return _files1[i];
+    _files1[i].write(s);
 }
 
-GzipFile GzipFiles::get_file2(string barcode) {
+void GzipFiles::write_file2(string barcode, string s) {
     auto it = find(_keys.begin(), _keys.end(), barcode);
     ptrdiff_t i = it - _keys.begin();
 
-    return _files2[i];
+    _files2[i].write(s);
 }
 

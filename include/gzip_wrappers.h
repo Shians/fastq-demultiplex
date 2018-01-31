@@ -26,8 +26,8 @@ class GzipFiles {
         GzipFiles(std::vector<std::string> barcodes, std::string outdir);
 
         void close_all();
-        GzipFile get_file1(std::string barcode);
-        GzipFile get_file2(std::string barcode);
+        void write_file1(std::string barcode, std::string s);
+        void write_file2(std::string barcode, std::string s);
 
     private:
         std::vector<GzipFile> _files1;
