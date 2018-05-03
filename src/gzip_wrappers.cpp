@@ -10,19 +10,36 @@ void gzip_close(gzFile file, string filename) {
     gzclose(file);
 };
 
-GzipFile::GzipFile(string filename) {
+/* GzipOutput */
+GzipOutput::GzipOutput(string filename) {
     _filename = filename;
     _fp = gzip_open(filename, "w");
 }
 
-void GzipFile::close() {
+void GzipOutput::close() {
+    this->flush();
     gzip_close(_fp, _filename);
 }
 
-void GzipFile::write(string s) {
-    gzprintf(_fp, "%s", s.c_str());
+void GzipOutput::write(const string s) {
+    _write_queue.push(s);
+    if (_write_queue.size() > 128) {
+        this->flush();
+    }
 }
 
+void GzipOutput::flush() {
+    std::stringstream buf;
+    while (_write_queue.size() > 0) {
+        buf << _write_queue.front();
+        _write_queue.pop();
+    }
+    if (buf.str() != "") {
+        gzputs(_fp, buf.str().c_str());
+    }
+}
+
+/* OutputPairs */
 OutputPairs::OutputPairs(std::vector<string> barcodes, string outdir) {
     _keys = barcodes;
     _outdir = outdir;
@@ -31,8 +48,8 @@ OutputPairs::OutputPairs(std::vector<string> barcodes, string outdir) {
         string r1_name = make_r1_name(_keys[i]);
         string r2_name = make_r2_name(_keys[i]);
 
-        _files1.push_back(GzipFile(r1_name));
-        _files2.push_back(GzipFile(r2_name));
+        _files1.push_back(GzipOutput(r1_name));
+        _files2.push_back(GzipOutput(r2_name));
     }
 }
 
@@ -43,14 +60,14 @@ void OutputPairs::close_all() {
     }
 }
 
-void OutputPairs::write_file1(string barcode, string s) {
+void OutputPairs::write_file1(string barcode, const string s) {
     auto it = find(_keys.begin(), _keys.end(), barcode);
     ptrdiff_t i = it - _keys.begin();
 
     _files1[i].write(s);
 }
 
-void OutputPairs::write_file2(string barcode, string s) {
+void OutputPairs::write_file2(string barcode, const string s) {
     auto it = find(_keys.begin(), _keys.end(), barcode);
     ptrdiff_t i = it - _keys.begin();
 

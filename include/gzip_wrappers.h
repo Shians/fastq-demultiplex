@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <sstream>
 #include <cstddef>
 #include <zlib.h>
 #include <string>
@@ -9,15 +10,17 @@
 gzFile gzip_open(std::string filename, std::string mode);
 void gzip_close(gzFile file);
 
-class GzipFile {
+class GzipOutput {
     public:
-        GzipFile(std::string filename);
+        GzipOutput(std::string filename);
 
         void close();
         void write(std::string s);
+        void flush();
     private:
         gzFile _fp;
         std::string _filename;
+        std::queue<std::string> _write_queue;
 };
 
 class OutputPairs {
@@ -29,8 +32,8 @@ class OutputPairs {
         void write_file2(std::string barcode, std::string s);
 
     private:
-        std::vector<GzipFile> _files1;
-        std::vector<GzipFile> _files2;
+        std::vector<GzipOutput> _files1;
+        std::vector<GzipOutput> _files2;
         std::vector<std::string> _keys;
         std::string _outdir;
 
