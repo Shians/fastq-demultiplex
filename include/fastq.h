@@ -7,7 +7,7 @@
 
 KSEQ_INIT(gzFile, gzread);
 
-
+// class representation of a single fastq record
 class Fastq_record {
     public:
         std::string name;
@@ -24,12 +24,14 @@ class Fastq_record {
             return os;
         }
 
+        // get the record as a string
         std::string str() {
             std::stringstream ss;
             ss << *this;
             return ss.str();
         }
 
+        // take a sub-range of the sequence
         std::string seq_substr(int start, int end) {
             int sub_len = end - start + 1;
             
@@ -37,6 +39,7 @@ class Fastq_record {
             return seq.substr(start-1, sub_len);
         }
 
+        // take a sub-range of the record (sequence and quality)
         Fastq_record substr(int start, int end) {
             int sub_len = end - start + 1;
 
@@ -52,6 +55,7 @@ class Fastq_record {
         }
 };
 
+// class representation of a fastq file
 class Fastq_file {
     public:
         Fastq_file(std::string filename) {
