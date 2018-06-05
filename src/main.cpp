@@ -2,18 +2,12 @@
 
 using namespace std;
 
-#if defined(_DEBUG)
-    const string TIME_MODE = "milliseconds";
-#else
-    const string TIME_MODE = "minutes";
-#endif
-
 int main(int argc, char* argv[]) {
     parse_args(argc, argv);
     check_args();
     print_args();
 
-    Timer timer(TIME_MODE);
+    Timer timer;
     timer.start();
 
     vector<string> barcodes = read_barcodes(PRG_OPTS.bc);
@@ -21,7 +15,7 @@ int main(int argc, char* argv[]) {
 
     demultiplex(barcodes, PRG_OPTS);
 
-    timer.print_elapsed();
+    cout << "Time elapsed: " << timer.time_elapsed() << "\n";
 
     return 0;
 }
