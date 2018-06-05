@@ -7,15 +7,15 @@
 #include <queue>
 #include <algorithm>
 
-gzFile gzip_open(std::string filename, std::string mode);
+gzFile gzip_open(const std::string &filename, const std::string &mode);
 void gzip_close(gzFile file);
 
 class GzipOutput {
     public:
-        GzipOutput(std::string filename);
+        GzipOutput(const std::string &filename);
 
         void close();
-        void write(std::string s);
+        void write(const std::string &s);
         void flush();
     private:
         gzFile _fp;
@@ -25,11 +25,11 @@ class GzipOutput {
 
 class OutputPairs {
     public:
-        OutputPairs(std::vector<std::string> barcodes, std::string outdir);
+        OutputPairs(std::vector<std::string> &barcodes, std::string &outdir);
 
         void close_all();
-        void write_file1(std::string barcode, std::string s);
-        void write_file2(std::string barcode, std::string s);
+        void write_file1(const std::string &barcode, const std::string &s);
+        void write_file2(const std::string &barcode, const std::string &s);
 
     private:
         std::vector<GzipOutput> _files1;
