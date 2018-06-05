@@ -54,6 +54,13 @@
         "mutex": "cpp",
         "ratio": "cpp",
         "system_error": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "__bit_reference": "cpp",
+        "__string": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp",
+        "algorithm": "cpp"
     }
 }
