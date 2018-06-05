@@ -10,7 +10,7 @@ TEST_ARGS = --bc "test/data/sample_index.csv" \
 			--r2-bc \
 			-o test/output
 
-CPPFLAGS = -o3 -Wall -std=c++11 -I./include -Wno-unused-function -Wno-sign-compare
+CPPFLAGS = -O3 -Wall -std=c++11 -I./include -Wno-unused-function -Wno-sign-compare
 LIBS = -lz -lboost_system -lboost_filesystem
 LDFLAG = 
 
