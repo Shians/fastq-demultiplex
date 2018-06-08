@@ -11,9 +11,14 @@ void gzip_close(gzFile &file, const string &filename) {
 };
 
 /* GzipOutput */
-GzipOutput::GzipOutput(const string &filename) {
+GzipOutput::GzipOutput(const string &filename, const size_t compression_level) {
+    size_t comp_level = compression_level;
+    comp_level = std::min(comp_level, static_cast<unsigned long>(9));
+    comp_level = std::max(comp_level, static_cast<unsigned long>(1));
+
+    string fmode = fmt::format("{}{}", filename, comp_level);
     _filename = filename;
-    _fp = gzip_open(filename, "w");
+    _fp = gzip_open(filename, "wb4");
 }
 
 void GzipOutput::close() {
@@ -61,15 +66,15 @@ void OutputPairs::close_all() {
 }
 
 void OutputPairs::write_file1(const string &barcode, const string &s) {
-    auto it = find(_keys.begin(), _keys.end(), barcode);
-    ptrdiff_t i = it - _keys.begin();
+    auto bc_ind = find(_keys.begin(), _keys.end(), barcode);
+    auto i = std::distance(_keys.begin(), bc_ind);
 
     _files1[i].write(s);
 }
 
 void OutputPairs::write_file2(const string &barcode, const string &s) {
-    auto it = find(_keys.begin(), _keys.end(), barcode);
-    ptrdiff_t i = it - _keys.begin();
+    auto bc_ind = find(_keys.begin(), _keys.end(), barcode);
+    auto i = std::distance(_keys.begin(), bc_ind);
 
     _files2[i].write(s);
 }

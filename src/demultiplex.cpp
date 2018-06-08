@@ -39,9 +39,11 @@ void demultiplex(vector<string> barcodes, options_t PRG_OPTS) {
         }
 
         if (binary_search(barcodes.begin(), barcodes.end(), barcode)) {
+            // if barcode matches write to named file
             files.write_file1(barcode, record1.str());
             files.write_file2(barcode, record2.str());
         } else {
+            // else write to undetermined file
             undetermined1.write(record1.str());
             undetermined2.write(record2.str());
         }
