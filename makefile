@@ -7,10 +7,10 @@ TEST_ARGS = --bc "test/data/sample_index.csv" \
 			--r2 "test/data/sample_R2.fastq.gz" \
 			--first 7 \
 			--last 14 \
-			--r2-bc \
+			--r2bc \
 			-o test/output
 
-CPPFLAGS = -O3 -Wall -std=c++11 -I./include -Wno-unused-function -Wno-sign-compare
+CPPFLAGS = -O3 -Wall -std=c++17 -I./include -Wno-unused-function -Wno-sign-compare
 LIBS = -lz -lboost_system -lboost_filesystem
 LDFLAG = 
 
@@ -26,7 +26,7 @@ objects := $(addprefix src/,$(files:%.cpp=%.o))
 
 all: build
 
-debug: CPPFLAGS = -Wall -std=c++11 -I./include -Wno-unused-function -Wno-sign-compare -pg -D_DEBUG
+debug: CPPFLAGS = -Wall -std=c++17 -I./include -Wno-unused-function -Wno-sign-compare -pg -D_DEBUG
 debug: build
 
 build: bin/$(PROG_NAME)

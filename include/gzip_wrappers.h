@@ -1,4 +1,7 @@
 #pragma once
+#define FMT_HEADER_ONLY
+#include <fmt/format.h>
+
 #include <iostream>
 #include <sstream>
 #include <cstddef>
@@ -12,7 +15,8 @@ void gzip_close(gzFile file);
 
 class GzipOutput {
     public:
-        GzipOutput(const std::string &filename);
+        GzipOutput(const std::string &filename, const size_t compression_level);
+        GzipOutput(const std::string &filename) : GzipOutput(filename, 4) {};
 
         void close();
         void write(const std::string &s);

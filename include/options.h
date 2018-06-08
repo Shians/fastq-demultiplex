@@ -1,4 +1,8 @@
 #pragma once
+#define FMT_HEADER_ONLY
+#include <fmt/format.h>
+
+#include <algorithm>
 #include <string>
 #include <tclap/CmdLine.h>
 #include <boost/filesystem.hpp>
@@ -11,6 +15,7 @@ struct options_t {
     int bc_end;
     bool r2_bc;
     std::string outdir;
+    int complvl;
 };
 
 extern options_t PRG_OPTS;
