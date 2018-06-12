@@ -1,8 +1,12 @@
 # Paired end FASTQ demultiplexing
 
-Demultiplex paired end reads by fixed position barcodes. This library requires C++14. This software is work in progress.
+Demultiplex paired end reads by fixed position barcodes. This library requires C++17. This software is work in progress.
 
 ## Installation
+
+This software uses the `<experimental/filsystem>` header for filesystem operations. This requires up-to-date versions of the C++ compiler to function correctly. This software has successfully compiled on:
+
+* GCC 6.3.0
 
 To compile the program:
 
@@ -45,5 +49,6 @@ Files will be created for each entry in `sample_index.csv`, all reads with no ba
 ## Warnings
 
 * On MacOS the number of files that can be opened by `terminal` is limited to 256, this program will fail silently and output fewer than expected files.
-    * Easiest way to fix this is by installing iTerm2 and running this program inside
+    * Easiest way to fix this is by installing iTerm2 and running this program inside.
+    * Check your files open limit using `ulimit -n`.
 * This is still a work in progress, please report any bugs you find using the issues tab.
