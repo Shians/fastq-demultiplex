@@ -48,7 +48,7 @@ void check_args() {
     }
 
     if (!fs::is_directory(PRG_OPTS.outdir)) {
-        fmt::print(stderr, "output directory does not exist: {}\n", PRG_OPTS.outdir);
+        fmt::print("output directory does not exist: {}\n", PRG_OPTS.outdir);
         folder_missing = true;
     }
 
