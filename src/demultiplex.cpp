@@ -60,7 +60,7 @@ void demultiplex(vector<string> const &barcodes) {
 
         records_processed++;
         if (records_processed % 500000 == 0) {
-            std::cout << records_processed << " records processed..." << "\n";
+            std::cout << records_processed << " records processed..." << std::endl;
         }
     } while (record1.good && record2.good);
 
