@@ -9,7 +9,9 @@ This software uses the `<experimental/filsystem>` header for filesystem operatio
 * GCC 6.3.0
 * clang 6.0.0
 
-To compile the program:
+Because `gcc` and `clang` use different libraries to handle filesystem. The compilation commands will be different.
+
+To compile the program (for GCC):
 
 ```
 git clone https://github.com/Shians/fastq-demultiplex.git
@@ -17,9 +19,11 @@ cd fastq-demultiplex
 make   # if using gcc
 ```
 
-Because `gcc` and `clang` use different libraries to handle filesystem, if you are using clang then run
+To compile the program (for clang):
 
 ```
+git clone https://github.com/Shians/fastq-demultiplex.git
+cd fastq-demultiplex
 make -f makefile.clang  # if using clang
 ```
 
