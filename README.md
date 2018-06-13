@@ -14,13 +14,13 @@ To compile the program:
 ```
 git clone https://github.com/Shians/fastq-demultiplex.git
 cd fastq-demultiplex
-make # if using gcc
+make   # if using gcc
 ```
 
 Because `gcc` and `clang` use different libraries to handle filesystem, if you are using clang then run
 
 ```
-make -f makefile.clang
+make -f makefile.clang  # if using clang
 ```
 
 The binaries will be in the `bin` folder. Manually place this in the path or run
