@@ -7,6 +7,7 @@ Demultiplex paired end reads by fixed position barcodes. This library requires C
 This software uses the `<experimental/filsystem>` header for filesystem operations. This requires up-to-date versions of the C++ compiler to function correctly. This software has successfully compiled on:
 
 * GCC 6.3.0
+* clang 6.0.0
 
 To compile the program:
 
