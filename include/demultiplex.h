@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <experimental/filesystem>
 
 #include "options.h"
 #include "fastq.h"
