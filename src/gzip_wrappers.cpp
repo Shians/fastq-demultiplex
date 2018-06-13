@@ -46,7 +46,7 @@ void GzipOutput::flush() {
 }
 
 /* OutputPairs */
-OutputPairs::OutputPairs(std::vector<string> &barcodes, string &outdir) {
+OutputPairs::OutputPairs(std::vector<string> const &barcodes, string const &outdir) {
     keys_ = barcodes;
     outdir_ = outdir;
 

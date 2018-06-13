@@ -3,7 +3,7 @@
 using std::string;
 using std::vector;
 
-void demultiplex(vector<string> barcodes, options_t PRG_OPTS) {
+void demultiplex(vector<string> const &barcodes) {
     string r1 = PRG_OPTS.r1;
     string r2 = PRG_OPTS.r2;
     int bc_start = PRG_OPTS.bc_start;

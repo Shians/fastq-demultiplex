@@ -7,4 +7,4 @@
 #include "fastq.h"
 #include "gzip_wrappers.h"
 
-void demultiplex(std::vector<std::string> barcodes, options_t PRG_OPTS);
+void demultiplex(std::vector<std::string> const &barcodes);

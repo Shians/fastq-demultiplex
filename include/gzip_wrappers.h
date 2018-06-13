@@ -30,7 +30,7 @@ private:
 
 // class to represent a pair of Gzip output files
 struct OutputPairs {
-    OutputPairs(std::vector<std::string> &barcodes, std::string &outdir);
+    OutputPairs(std::vector<std::string> const &barcodes, std::string const &outdir);
 
     void close_all();
     void write_file1(std::string const &barcode, std::string const &s);
