@@ -38,17 +38,17 @@ void check_args() {
     bool folder_missing = false;
     
     if (!fs::exists(PRG_OPTS.r1)) {
-        fmt::print(stderr, "R1 does not exist: {}\n", PRG_OPTS.r1);
+        std::cerr << fmt::format("R1 does not exist: {}\n", PRG_OPTS.r1) << std::endl;
         files_missing = true;
     }
 
     if (!fs::exists(PRG_OPTS.r2)) {
-        fmt::print(stderr, "R2 does not exist: {}\n", PRG_OPTS.r2);
+        std::cerr << fmt::format("R2 does not exist: {}\n", PRG_OPTS.r2)  << std::endl;
         files_missing = true;
     }
 
     if (!fs::is_directory(PRG_OPTS.outdir)) {
-        fmt::print(stderr, "output directory does not exist: {}\n", PRG_OPTS.outdir);
+        std::cout << fmt::format("output directory does not exist: {}\n", PRG_OPTS.outdir)  << std::endl;
         folder_missing = true;
     }
 
@@ -57,20 +57,20 @@ void check_args() {
     }
 
     if (folder_missing) {
-        fmt::print("creating directory: {}\n", PRG_OPTS.outdir);
+        std::cout << fmt::format("creating directory: {}\n", PRG_OPTS.outdir)  << std::endl;
         fs::create_directory(PRG_OPTS.outdir);
     }
 }
 
 void print_args() {
-    fmt::print("Barcodes file: {}\n" ,PRG_OPTS.bc);
-    fmt::print("R1 file: {}\n", PRG_OPTS.r1);
-    fmt::print("R2 file: {}\n", PRG_OPTS.r2);
-    fmt::print("Barcode range: {} to {} ({} bases in {})\n",
+    std::cout << fmt::format("Barcodes file: {}" ,PRG_OPTS.bc) << std::endl;
+    std::cout << fmt::format("R1 file: {}", PRG_OPTS.r1) << std::endl;
+    std::cout << fmt::format("R2 file: {}", PRG_OPTS.r2) << std::endl;
+    std::cout << fmt::format("Barcode range: {} to {} ({} bases in {})",
         PRG_OPTS.bc_start,
         PRG_OPTS.bc_end,
         PRG_OPTS.bc_end - PRG_OPTS.bc_start + 1,
         (PRG_OPTS.r2_bc ? "R2" : "R1")
-    );
-    fmt::print("Output dir: {}\n", PRG_OPTS.outdir);
+    ) << std::endl;
+    std::cout << fmt::format("Output dir: {}", PRG_OPTS.outdir) << std::endl;
 }

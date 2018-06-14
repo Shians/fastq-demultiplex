@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     vector<string> barcodes = read_barcodes(PRG_OPTS.bc);
     sort(barcodes.begin(), barcodes.end());
 
-    demultiplex(barcodes, PRG_OPTS);
+    demultiplex(barcodes);
 
     cout << "Time elapsed: " << timer.time_elapsed() << "\n";
 

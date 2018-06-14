@@ -3,7 +3,9 @@
 using std::string;
 using std::vector;
 
-void demultiplex(vector<string> barcodes, options_t PRG_OPTS) {
+extern options_t PRG_OPTS;
+
+void demultiplex(vector<string> const &barcodes) {
     string r1 = PRG_OPTS.r1;
     string r2 = PRG_OPTS.r2;
     int bc_start = PRG_OPTS.bc_start;
@@ -12,8 +14,16 @@ void demultiplex(vector<string> barcodes, options_t PRG_OPTS) {
     string outdir = PRG_OPTS.outdir;
     
     OutputPairs files(barcodes, PRG_OPTS.outdir);
-    GzipOutput undetermined1(outdir + "/Undetermined_R1.fastq.gz");
-    GzipOutput undetermined2(outdir + "/Undetermined_R2.fastq.gz");
+    
+    typedef std::experimental::filesystem::path file_path;
+    
+    file_path out_path_r1 = outdir;
+    out_path_r1 /= "Undetermined_R1.fastq.gz";
+    GzipOutput undetermined1(out_path_r1.string());
+
+    file_path out_path_r2 = outdir;
+    out_path_r2 /= "Undetermined_R2.fastq.gz";
+    GzipOutput undetermined2(out_path_r2.string());
 
     Fastq_file fq1(r1);
     Fastq_file fq2(r2);
@@ -50,7 +60,7 @@ void demultiplex(vector<string> barcodes, options_t PRG_OPTS) {
 
         records_processed++;
         if (records_processed % 500000 == 0) {
-            std::cout << records_processed << " records processed..." << "\n";
+            std::cout << records_processed << " records processed..." << std::endl;
         }
     } while (record1.good && record2.good);
 

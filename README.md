@@ -4,12 +4,27 @@ Demultiplex paired end reads by fixed position barcodes. This library requires C
 
 ## Installation
 
-To compile the program:
+This software uses the `<experimental/filsystem>` header for filesystem operations. This requires up-to-date versions of the C++ compiler to function correctly. This software has successfully compiled on:
+
+* GCC 6.3.0
+* clang 6.0.0
+
+Because `gcc` and `clang` use different libraries to handle filesystem. The compilation commands will be different.
+
+To compile the program (for GCC):
 
 ```
 git clone https://github.com/Shians/fastq-demultiplex.git
 cd fastq-demultiplex
-make 
+make   # if using gcc
+```
+
+To compile the program (for clang):
+
+```
+git clone https://github.com/Shians/fastq-demultiplex.git
+cd fastq-demultiplex
+make -f makefile.clang  # if using clang
 ```
 
 The binaries will be in the `bin` folder. Manually place this in the path or run
@@ -45,5 +60,6 @@ Files will be created for each entry in `sample_index.csv`, all reads with no ba
 ## Warnings
 
 * On MacOS the number of files that can be opened by `terminal` is limited to 256, this program will fail silently and output fewer than expected files.
-    * Easiest way to fix this is by installing iTerm2 and running this program inside
+    * Easiest way to fix this is by installing iTerm2 and running this program inside.
+    * Check your files open limit using `ulimit -n`.
 * This is still a work in progress, please report any bugs you find using the issues tab.
