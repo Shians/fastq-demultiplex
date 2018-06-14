@@ -22,6 +22,7 @@ struct GzipOutput {
     void close();
     void write(std::string const &s);
     void flush();
+
 private:
     gzFile fp_;
     std::string filename_;

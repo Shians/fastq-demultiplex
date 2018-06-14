@@ -4,8 +4,8 @@
 #include <string>
 #include <experimental/filesystem>
 
-#include "options.h"
-#include "fastq.h"
-#include "gzip_wrappers.h"
+#include "options.hpp"
+#include "fastq.hpp"
+#include "gzip_wrappers.hpp"
 
 void demultiplex(std::vector<std::string> const &barcodes);

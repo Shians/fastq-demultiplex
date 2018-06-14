@@ -1,12 +1,13 @@
-#include "gzip_wrappers.h"
+#include "gzip_wrappers.hpp"
 
 using std::string;
 
+// open gzip file
 gzFile gzip_open(string const &filename, string const &mode) {
     return gzopen(filename.c_str(), mode.c_str());
 }
 
-
+// close gzip file
 void gzip_close(gzFile &file, string const &filename) {
     gzclose(file);
 };

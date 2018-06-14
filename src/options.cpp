@@ -1,4 +1,4 @@
-#include "options.h"
+#include "options.hpp"
 
 options_t PRG_OPTS;
 
