@@ -30,7 +30,7 @@ debug: build
 
 build: bin/$(PROG_NAME)
 
-test:
+test: bin/$(PROG_NAME)
 	mkdir -p test/output
 	bin/$(PROG_NAME) $(TEST_ARGS)
 

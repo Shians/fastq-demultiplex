@@ -8,7 +8,7 @@
 KSEQ_INIT(gzFile, gzread);
 
 // class representation of a single fastq record
-class Fastq_record {
+class FastqRecord {
     public:
         std::string name;
         std::string comment;
@@ -16,7 +16,7 @@ class Fastq_record {
         std::string qual;
         bool good;
 
-        friend std::ostream& operator<<(std::ostream &os, const Fastq_record &obj) {
+        friend std::ostream& operator<<(std::ostream &os, const FastqRecord &obj) {
             os << "@" << obj.name << " " << obj.comment << "\n"
                 << obj.seq << "\n"
                 << "+" << "\n"
@@ -25,14 +25,14 @@ class Fastq_record {
         }
 
         // get the record as a string
-        std::string str() {
+        std::string str() const {
             std::stringstream ss;
             ss << *this;
             return ss.str();
         }
 
         // take a sub-range of the sequence
-        std::string seq_substr(int start, int end) {
+        std::string seq_substr(int start, int end) const {
             int sub_len = end - start + 1;
             
             // input is 1-indexed, convert to 0-index
@@ -40,10 +40,10 @@ class Fastq_record {
         }
 
         // take a sub-range of the record (sequence and quality)
-        Fastq_record substr(int start, int end) {
+        FastqRecord substr(int start, int end) const {
             int sub_len = end - start + 1;
 
-            Fastq_record record;
+            FastqRecord record;
             record.name = name;
             record.comment = comment;
 
@@ -56,22 +56,22 @@ class Fastq_record {
 };
 
 // class representation of a fastq file
-class Fastq_file {
+class FastqFile {
     public:
-        Fastq_file(std::string filename) {
+        FastqFile(std::string filename) {
             _filename = filename;
             std::cout << "reading from " << filename << "\n";
             _fp = gzopen(_filename.c_str(), "r");
             _seq = kseq_init(_fp);
         }
 
-        ~Fastq_file() {
+        ~FastqFile() {
             kseq_destroy(_seq);
             gzclose(_fp);
         }
 
-        Fastq_record get_record(void) {
-            Fastq_record record;
+        FastqRecord get_record(void) {
+            FastqRecord record;
             int l = kseq_read(_seq);
 
             record.name = _seq->name.s;
