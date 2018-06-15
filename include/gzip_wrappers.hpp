@@ -46,7 +46,7 @@ private:
     typedef std::experimental::filesystem::path file_path;
     std::string make_filename(std::string const &bc, std::string const &read) {
         file_path out_path = outdir_;
-        out_path /=  bc + "_R" + read + "fastq.gz";
+        out_path /=  bc + "_R" + read + ".fastq.gz";
         return out_path.string();
     }
 
