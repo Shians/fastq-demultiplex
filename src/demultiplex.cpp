@@ -73,10 +73,12 @@ void demultiplex(vector<string> const &barcodes) {
     FastqRecord record1;
     FastqRecord record2;
 
+    size_t const BATCH_SIZE = 512;
     vector<FastqRecordPair> record_queue;
+    record_queue.reserve(BATCH_SIZE);
 
     do {
-        for (int i = 0; i < 512; i++) {
+        for (int i = 0; i < BATCH_SIZE; i++) {
             record1 = fq1.get_record();
             record2 = fq2.get_record();
             if (!record1.good || !record2.good) {
