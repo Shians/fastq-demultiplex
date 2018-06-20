@@ -38,7 +38,6 @@ void process_record_pairs(
 
         records_processed++;
         if (records_processed % 500000 == 0) {
-            std::cout.imbue(std::locale(""));
             std::cout << records_processed << " records processed..." << std::endl;
         }
     }
@@ -79,6 +78,5 @@ void demultiplex(vector<string> const &barcodes) {
 
     files.close_all();
 
-    std::cout.imbue(std::locale(""));
     std::cout << records_processed << " records processed..." << "\n";
 }
