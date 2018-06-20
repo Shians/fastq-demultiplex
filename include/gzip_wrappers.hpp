@@ -32,7 +32,7 @@ private:
     gzFile fp_;
     std::string filename_;
     std::queue<std::string> write_queue_;
-    std::mutex mutex_;
+    // std::mutex mutex_;
 };
 
 // class to represent a pair of Gzip output files
