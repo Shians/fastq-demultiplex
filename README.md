@@ -1,10 +1,10 @@
 # Paired end FASTQ demultiplexing
 
-Demultiplex paired end reads by fixed position barcodes. This library requires C++17. This software is work in progress.
+Demultiplex paired end reads by fixed position barcodes. This library requires C++17 and Boost C++ libraries. This software is work in progress.
 
 ## Installation
 
-This software uses the `<experimental/filsystem>` header for filesystem operations. This requires up-to-date versions of the C++ compiler to function correctly. This software has successfully compiled on:
+This software has successfully compiled on:
 
 * GCC 6.3.0
 * clang 6.0.0

@@ -18,7 +18,7 @@ GzipOutput::GzipOutput(string const &filename, size_t const compression_level) {
     comp_level = std::min(comp_level, static_cast<unsigned long>(9));
     comp_level = std::max(comp_level, static_cast<unsigned long>(1));
 
-    string fmode = fmt::format("{}{}", filename, comp_level);
+    string fmode = fmt::format("wb{}", comp_level);
     filename_ = filename;
     fp_ = gzip_open(filename, fmode);
 }

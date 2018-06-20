@@ -2,14 +2,14 @@
 
 options_t PRG_OPTS;
 
-namespace fs = std::experimental::filesystem;
+namespace fs = boost::filesystem;
 
 void parse_args(int &argc, char *argv[]) {
     try {  
         TCLAP::CmdLine cmd("Command description message", ' ', "0.9.1");
 
         // arguments are pushed into order, so inserted from last to first
-        int_arg complvl("", "complvl", "compression level", false, 4, "int", cmd);
+        int_arg complvl("", "complvl", "compression level", false, 9, "int", cmd);
         string_arg outdir("o", "outdir", "output folder", false, "output", "folder", cmd);
         switch_arg r2_bc("", "r2bc", "set flag if barcode is on R2", cmd, false);
         int_arg bc_end("l", "last", "barcode end location", true, 0, "int", cmd);

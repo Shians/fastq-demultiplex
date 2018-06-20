@@ -11,7 +11,7 @@ TEST_ARGS = --bc "test/data/sample_index.csv" \
 			-o test/output
 
 CPPFLAGS += -O3 -Wall -std=c++17 -I./include -Wno-unused-function -Wno-sign-compare
-LIBS += -lz -lstdc++fs
+LIBS += -lz -lboost_system -lboost_filesystem
 
 vpath %.c src
 vpath %.o src

@@ -5,7 +5,7 @@ using std::vector;
 
 extern options_t PRG_OPTS;
 
-typedef std::experimental::filesystem::path FilePath;
+typedef boost::filesystem::path FilePath;
 typedef std::pair<FastqRecord, FastqRecord> FastqRecordPair;
 
 static unsigned long records_processed = 0;
