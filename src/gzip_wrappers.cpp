@@ -57,6 +57,16 @@ OutputPairs::OutputPairs(std::vector<string> const &barcodes, string const &outd
 
         files1_.push_back(std::make_unique<GzipOutput>(r1_name));
         files2_.push_back(std::make_unique<GzipOutput>(r2_name));
+
+        typedef boost::filesystem::path FilePath;
+
+        FilePath out_path_r1 = outdir;
+        out_path_r1 /= "Undetermined_R1.fastq.gz";
+        undetermined1_ = std::make_unique<GzipOutput>(out_path_r1.string());
+
+        FilePath out_path_r2 = outdir;
+        out_path_r2 /= "Undetermined_R2.fastq.gz";
+        undetermined2_ = std::make_unique<GzipOutput>(out_path_r2.string());
     }
 }
 
@@ -65,18 +75,86 @@ void OutputPairs::close_all() {
         files1_[i]->close();
         files2_[i]->close();
     }
+    undetermined1_->close();
+    undetermined2_->close();
+}
+
+int hamming_dist(string const &s1, string const &s2) {
+    if (s1.size() != s2.size()) {
+        throw std::runtime_error("string lengths do not match");
+    }
+
+    int dist = 0;
+
+    for (int i = 0; i < s1.size(); i++) {
+        dist += s1[i] != s2[i];
+    }
+
+    return dist;
+}
+
+int OutputPairs::get_closest_match(std::string const &barcode) {
+    int max_mismatch = PRG_OPTS.mismatch;
+
+    auto exact_match = std::find(keys_.begin(), keys_.end(), barcode);
+    if (exact_match != keys_.end()) {
+        return std::distance(keys_.begin(), exact_match);
+    }
+
+    std::vector<int> ham_dist_vec;
+    ham_dist_vec.reserve(keys_.size());
+
+    string closest_match;
+
+    std::transform(
+        std::begin(keys_),
+        std::end(keys_),
+        std::back_inserter(ham_dist_vec),
+        [&] (auto const &key) { return hamming_dist(barcode, key); }
+    );
+
+    int min_ham_dist = std::reduce(
+        std::begin(ham_dist_vec),
+        std::end(ham_dist_vec),
+        std::numeric_limits<int>::max(),
+        [] (int a, int b) { return std::min(a, b); }
+    );
+
+    if (min_ham_dist > max_mismatch) {
+        return -1;
+    }
+
+    int dists_at_min = std::count_if(
+        std::begin(ham_dist_vec),
+        std::end(ham_dist_vec),
+        [min_ham_dist] (int val) { return val == min_ham_dist; }
+    );
+
+    if (dists_at_min > 1) {
+        return -1;
+    }
+
+    auto ham_match = std::find(std::begin(ham_dist_vec), std::end(ham_dist_vec), min_ham_dist);
+
+    return std::distance(ham_dist_vec.begin(), ham_match);
 }
 
 void OutputPairs::write_file1(string const &barcode, string const &s) {
-    auto bc_ind = find(keys_.begin(), keys_.end(), barcode);
-    auto i = std::distance(keys_.begin(), bc_ind);
+    auto i = get_closest_match(barcode);
 
-    files1_[i]->write(s);
+    if (i < 0) {
+        undetermined1_->write(s);
+    } else {
+        files1_[i]->write(s);
+    }
 }
 
 void OutputPairs::write_file2(string const &barcode, string const &s) {
-    auto bc_ind = find(keys_.begin(), keys_.end(), barcode);
-    auto i = std::distance(keys_.begin(), bc_ind);
+    auto i = get_closest_match(barcode);
 
-    files2_[i]->write(s);
+    if (i < 0) {
+        undetermined2_->write(s);
+    } else {
+        files2_[i]->write(s);
+    }
 }

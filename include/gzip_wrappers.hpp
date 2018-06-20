@@ -1,13 +1,17 @@
 #pragma once
 #define FMT_HEADER_ONLY
 #include "fmt/format.h"
+#include "options.hpp"
 
 #include <boost/filesystem.hpp>
+#include <zlib.h>
+
 #include <iostream>
 #include <sstream>
 #include <cstddef>
-#include <zlib.h>
 #include <string>
+#include <numeric>
+#include <limits>
 #include <queue>
 #include <mutex>
 #include <algorithm>
@@ -36,12 +40,15 @@ struct OutputPairs {
     OutputPairs(std::vector<std::string> const &barcodes, std::string const &outdir);
 
     void close_all();
+    int get_closest_match(std::string const &barcode);
     void write_file1(std::string const &barcode, std::string const &s);
     void write_file2(std::string const &barcode, std::string const &s);
 
 private:
     std::vector<std::unique_ptr<GzipOutput>> files1_;
     std::vector<std::unique_ptr<GzipOutput>> files2_;
+    std::unique_ptr<GzipOutput> undetermined1_;
+    std::unique_ptr<GzipOutput> undetermined2_;
     std::vector<std::string> keys_;
     std::string outdir_;
 

@@ -5,7 +5,6 @@ using std::vector;
 
 extern options_t PRG_OPTS;
 
-typedef boost::filesystem::path FilePath;
 typedef std::pair<FastqRecord, FastqRecord> FastqRecordPair;
 
 static unsigned long records_processed = 0;
@@ -13,8 +12,6 @@ static unsigned long records_processed = 0;
 void process_record_pairs(
     vector<FastqRecordPair> &record_queue,
     OutputPairs &files,
-    GzipOutput &undetermined1,
-    GzipOutput &undetermined2,
     vector<string> const &barcodes
 ) {
     if (record_queue.size() == 0) {
@@ -37,15 +34,8 @@ void process_record_pairs(
             barcode = record2.seq_substr(bc_start, bc_end);
         }
 
-        if (binary_search(barcodes.begin(), barcodes.end(), barcode)) {
-            // if barcode matches write to named file
-            files.write_file1(barcode, record1.str());
-            files.write_file2(barcode, record2.str());
-        } else {
-            // else write to undetermined file
-            undetermined1.write(record1.str());
-            undetermined2.write(record2.str());
-        }
+        files.write_file1(barcode, record1.str());
+        files.write_file2(barcode, record2.str());
 
         records_processed++;
     }
@@ -58,14 +48,6 @@ void demultiplex(vector<string> const &barcodes) {
     string outdir = PRG_OPTS.outdir;
     
     OutputPairs files(barcodes, outdir);
-
-    FilePath out_path_r1 = outdir;
-    out_path_r1 /= "Undetermined_R1.fastq.gz";
-    GzipOutput undetermined1(out_path_r1.string());
-
-    FilePath out_path_r2 = outdir;
-    out_path_r2 /= "Undetermined_R2.fastq.gz";
-    GzipOutput undetermined2(out_path_r2.string());
 
     FastqFile fq1(r1);
     FastqFile fq2(r2);
@@ -88,7 +70,7 @@ void demultiplex(vector<string> const &barcodes) {
             record_queue.push_back(std::make_pair(record1, record2));
         }
 
-        process_record_pairs(record_queue, files, undetermined1, undetermined2, barcodes);
+        process_record_pairs(record_queue, files, barcodes);
 
         if (records_processed % 500000 == 0) {
             std::cout << records_processed << " records processed..." << std::endl;
@@ -96,8 +78,6 @@ void demultiplex(vector<string> const &barcodes) {
     } while (record1.good && record2.good);
 
     files.close_all();
-    undetermined1.close();
-    undetermined2.close();
 
     std::cout << records_processed << " total records processed" << "\n";
 }
