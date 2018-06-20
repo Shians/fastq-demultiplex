@@ -58,7 +58,7 @@ OutputPairs::OutputPairs(std::vector<string> const &barcodes, string const &outd
         files1_.push_back(std::make_unique<GzipOutput>(r1_name));
         files2_.push_back(std::make_unique<GzipOutput>(r2_name));
 
-        typedef boost::filesystem::path FilePath;
+        typedef std::experimental::filesystem::path FilePath;
 
         FilePath out_path_r1 = outdir;
         out_path_r1 /= "Undetermined_R1.fastq.gz";

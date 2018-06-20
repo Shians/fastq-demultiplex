@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 
 #include "options.hpp"
 #include "fastq.hpp"

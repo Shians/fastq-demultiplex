@@ -3,7 +3,7 @@
 #include "fmt/format.h"
 #include "options.hpp"
 
-#include <boost/filesystem.hpp>
+#include <experimental/filesystem>
 #include <zlib.h>
 
 #include <iostream>
@@ -53,7 +53,7 @@ private:
     std::vector<std::string> keys_;
     std::string outdir_;
 
-    typedef boost::filesystem::path file_path;
+    typedef std::experimental::filesystem::path file_path;
     std::string make_filename(std::string const &bc, std::string const &read) {
         file_path out_path = outdir_;
         out_path /=  bc + "_R" + read + ".fastq.gz";
