@@ -93,17 +93,27 @@ int hamming_dist(string const &s1, string const &s2) {
     return dist;
 }
 
+// find the index of the barcode with closest match
+// returns -1 if maximum mismatch is exceeded or multiple barcodes are within
+// mismatch limit
 int OutputPairs::get_closest_match(std::string const &barcode) {
     int max_mismatch = PRG_OPTS.mismatch;
 
-    auto exact_match = std::find(keys_.begin(), keys_.end(), barcode);
+    // if exact match can be found then 
+    auto exact_match = std::lower_bound(keys_.begin(), keys_.end(), barcode);
     if (exact_match != keys_.end()) {
         return std::distance(keys_.begin(), exact_match);
     }
 
+    // if no exact match is found and no mismatch is allowed then can return -1 here
+    if (max_mismatch == 0) {
+        return -1;
+    }
+
     std::vector<int> ham_dist_vec;
     ham_dist_vec.reserve(keys_.size());
-    
+
+    // check hamming distance to every annotated barcode
     std::transform(
         std::begin(keys_),
         std::end(keys_),
@@ -111,29 +121,29 @@ int OutputPairs::get_closest_match(std::string const &barcode) {
         [&] (auto const &key) { return hamming_dist(barcode, key); }
     );
 
+    // find smallest hamming distance
+    // if smallest hamming distance is greater than mismatch return -1
     int min_ham_dist = std::accumulate(
         std::begin(ham_dist_vec),
         std::end(ham_dist_vec),
         std::numeric_limits<int>::max(),
         [] (int a, int b) { return std::min(a, b); }
     );
-
     if (min_ham_dist > max_mismatch) {
         return -1;
     }
 
+    // if multiple barcodes are tied at smallest hamming distance then return -1
     int dists_at_min = std::count_if(
         std::begin(ham_dist_vec),
         std::end(ham_dist_vec),
         [min_ham_dist] (int val) { return val == min_ham_dist; }
     );
-
     if (dists_at_min > 1) {
         return -1;
     }
 
     auto ham_match = std::find(std::begin(ham_dist_vec), std::end(ham_dist_vec), min_ham_dist);
-
     return std::distance(ham_dist_vec.begin(), ham_match);
 }
 
