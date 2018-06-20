@@ -113,7 +113,7 @@ int OutputPairs::get_closest_match(std::string const &barcode) {
         [&] (auto const &key) { return hamming_dist(barcode, key); }
     );
 
-    int min_ham_dist = std::reduce(
+    int min_ham_dist = std::accumulate(
         std::begin(ham_dist_vec),
         std::end(ham_dist_vec),
         std::numeric_limits<int>::max(),
