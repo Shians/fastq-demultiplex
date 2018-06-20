@@ -9,6 +9,7 @@
 #include <zlib.h>
 #include <string>
 #include <queue>
+#include <mutex>
 #include <algorithm>
 
 gzFile gzip_open(std::string const &filename, std::string const &mode);
@@ -27,6 +28,7 @@ private:
     gzFile fp_;
     std::string filename_;
     std::queue<std::string> write_queue_;
+    std::mutex mutex_;
 };
 
 // class to represent a pair of Gzip output files
@@ -38,8 +40,8 @@ struct OutputPairs {
     void write_file2(std::string const &barcode, std::string const &s);
 
 private:
-    std::vector<GzipOutput> files1_;
-    std::vector<GzipOutput> files2_;
+    std::vector<std::unique_ptr<GzipOutput>> files1_;
+    std::vector<std::unique_ptr<GzipOutput>> files2_;
     std::vector<std::string> keys_;
     std::string outdir_;
 
