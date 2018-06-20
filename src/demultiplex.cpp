@@ -34,8 +34,7 @@ void process_record_pairs(
             barcode = record2.seq_substr(bc_start, bc_end);
         }
 
-        files.write_file1(barcode, record1.str());
-        files.write_file2(barcode, record2.str());
+        files.write_files(barcode, record1.str(), record2.str());
 
         records_processed++;
         if (records_processed % 500000 == 0) {

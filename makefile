@@ -8,6 +8,7 @@ TEST_ARGS = --bc "test/data/sample_index.csv" \
 			--first 7 \
 			--last 14 \
 			--r2bc \
+			--complvl 3 \
 			-o test/output
 
 CPPFLAGS += -O3 -Wall -std=c++17 -I./include -Wno-unused-function -Wno-sign-compare

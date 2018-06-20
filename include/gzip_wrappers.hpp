@@ -41,8 +41,9 @@ struct OutputPairs {
 
     void close_all();
     int get_closest_match(std::string const &barcode);
-    void write_file1(std::string const &barcode, std::string const &s);
-    void write_file2(std::string const &barcode, std::string const &s);
+    void write_files(std::string const &barcode, std::string const &s1, std::string const &s2);
+    void write_file1(std::string const &barcode, std::string const &s, int ind);
+    void write_file2(std::string const &barcode, std::string const &s, int ind);
 
 private:
     std::vector<std::unique_ptr<GzipOutput>> files1_;

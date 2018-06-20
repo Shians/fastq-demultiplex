@@ -103,9 +103,7 @@ int OutputPairs::get_closest_match(std::string const &barcode) {
 
     std::vector<int> ham_dist_vec;
     ham_dist_vec.reserve(keys_.size());
-
-    string closest_match;
-
+    
     std::transform(
         std::begin(keys_),
         std::end(keys_),
@@ -139,22 +137,24 @@ int OutputPairs::get_closest_match(std::string const &barcode) {
     return std::distance(ham_dist_vec.begin(), ham_match);
 }
 
-void OutputPairs::write_file1(string const &barcode, string const &s) {
-    auto i = get_closest_match(barcode);
+void OutputPairs::write_files(string const &barcode, string const &s1, string const &s2) {
+    auto ind = get_closest_match(barcode);
+    write_file1(barcode, s1, ind);
+    write_file2(barcode, s2, ind);
+}
 
-    if (i < 0) {
+void OutputPairs::write_file1(string const &barcode, string const &s, int ind) {
+    if (ind < 0) {
         undetermined1_->write(s);
     } else {
-        files1_[i]->write(s);
+        files1_[ind]->write(s);
     }
 }
 
-void OutputPairs::write_file2(string const &barcode, string const &s) {
-    auto i = get_closest_match(barcode);
-
-    if (i < 0) {
+void OutputPairs::write_file2(string const &barcode, string const &s, int ind) {
+    if (ind < 0) {
         undetermined2_->write(s);
     } else {
-        files2_[i]->write(s);
+        files2_[ind]->write(s);
     }
 }
