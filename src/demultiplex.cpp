@@ -39,7 +39,7 @@ void process_record_pairs(
         records_processed++;
         if (records_processed % 500000 == 0) {
             std::cout.imbue(std::locale(""));
-            std::cout << records_processed << " records processed..." << "\n";
+            std::cout << records_processed << " records processed..." << std::endl;
         }
     }
     record_queue.clear();
