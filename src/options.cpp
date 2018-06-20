@@ -6,7 +6,7 @@ namespace fs = boost::filesystem;
 
 void parse_args(int &argc, char *argv[]) {
     try {  
-        TCLAP::CmdLine cmd("Command description message", ' ', "0.9.1");
+        TCLAP::CmdLine cmd("Command description message", ' ', "0.9.2");
 
         // arguments are pushed into order, so inserted from last to first
         int_arg complvl("z", "complvl", "compression level", false, 9, "int", cmd);
@@ -75,4 +75,6 @@ void print_args() {
         (PRG_OPTS.r2_bc ? "R2" : "R1")
     ) << std::endl;
     std::cout << fmt::format("Output dir: {}", PRG_OPTS.outdir) << std::endl;
+    std::cout << fmt::format("Allowed mismatches: {}", PRG_OPTS.mismatch) << std::endl;
+    std::cout << fmt::format("Compression level: {}", PRG_OPTS.complvl) << std::endl;
 }
