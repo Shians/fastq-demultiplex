@@ -38,6 +38,9 @@ void process_record_pairs(
         files.write_file2(barcode, record2.str());
 
         records_processed++;
+        if (records_processed % 500000 == 0) {
+            std::cout << records_processed << " records processed..." << std::endl;
+        }
     }
     record_queue.clear();
 }
@@ -72,9 +75,6 @@ void demultiplex(vector<string> const &barcodes) {
 
         process_record_pairs(record_queue, files, barcodes);
 
-        if (records_processed % 500000 == 0) {
-            std::cout << records_processed << " records processed..." << std::endl;
-        }
     } while (record1.good && record2.good);
 
     files.close_all();
