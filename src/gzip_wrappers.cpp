@@ -81,7 +81,7 @@ void OutputPairs::close_all() {
 
 int hamming_dist(string const &s1, string const &s2) {
     if (s1.size() != s2.size()) {
-        throw std::runtime_error("string lengths do not match");
+        throw std::runtime_error(fmt::format("string lengths do not match: {} and {}", s1, s2));
     }
 
     int dist = 0;

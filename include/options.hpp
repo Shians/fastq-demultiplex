@@ -16,6 +16,7 @@ struct options_t {
     bool r2_bc;
     std::string outdir;
     int mismatch;
+    bool undetermined;
     int complvl;
 };
 

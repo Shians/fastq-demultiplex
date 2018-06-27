@@ -10,6 +10,7 @@ void parse_args(int &argc, char *argv[]) {
 
         // arguments are pushed into order, so inserted from last to first
         int_arg complvl("z", "complvl", "compression level", false, 9, "int", cmd);
+        switch_arg undetermined("u", "undet-out", "set flag if undetermined reads should be written out", cmd, true);
         int_arg mismatch("m", "mismatch", "number of base mismatches allowed for barcodes", false, 1, "int", cmd);
         string_arg outdir("o", "outdir", "output folder", false, "output", "folder", cmd);
         switch_arg r2_bc("", "r2bc", "set flag if barcode is on R2", cmd, false);
@@ -22,6 +23,7 @@ void parse_args(int &argc, char *argv[]) {
         cmd.parse(argc, argv);
 
         PRG_OPTS.complvl = complvl.getValue();
+        PRG_OPTS.undetermined = undetermined.getValue();
         PRG_OPTS.mismatch = mismatch.getValue();
         PRG_OPTS.outdir = outdir.getValue();
         PRG_OPTS.r2_bc = r2_bc.getValue();
