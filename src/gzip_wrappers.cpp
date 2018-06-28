@@ -100,8 +100,8 @@ int OutputPairs::get_closest_match(std::string const &barcode) {
     int max_mismatch = PRG_OPTS.mismatch;
 
     // if exact match can be found then 
-    auto exact_match = std::find(keys_.begin(), keys_.end(), barcode);
-    if (exact_match != keys_.end()) {
+    auto exact_match = std::lower_bound(keys_.begin(), keys_.end(), barcode);
+    if (exact_match != keys_.end() && (*exact_match == barcode)) {
         return std::distance(keys_.begin(), exact_match);
     }
 
