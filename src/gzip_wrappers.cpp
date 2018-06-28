@@ -81,7 +81,7 @@ void OutputPairs::close_all() {
 
 int hamming_dist(string const &s1, string const &s2) {
     if (s1.size() != s2.size()) {
-        throw std::runtime_error(fmt::format("string lengths do not match: {} and {}", s1, s2));
+        throw std::runtime_error(fmt::format("string lengths do not match: '{}' and '{}'", s1, s2));
     }
 
     int dist = 0;
@@ -100,8 +100,8 @@ int OutputPairs::get_closest_match(std::string const &barcode) {
     int max_mismatch = PRG_OPTS.mismatch;
 
     // if exact match can be found then 
-    auto exact_match = std::find(keys_.begin(), keys_.end(), barcode);
-    if (exact_match != keys_.end()) {
+    auto exact_match = std::lower_bound(keys_.begin(), keys_.end(), barcode);
+    if (exact_match != keys_.end() && (*exact_match == barcode)) {
         return std::distance(keys_.begin(), exact_match);
     }
 
