@@ -1,6 +1,6 @@
 # Paired end FASTQ demultiplexing
 
-Demultiplex paired end reads by fixed position barcodes. This library requires C++17 and Boost C++ libraries. This software is work in progress.
+Demultiplex paired end reads by fixed position barcodes. This library requires Boost C++ libraries and a compiler supporting C++17. This software is work in progress.
 
 ## Installation
 
@@ -9,22 +9,12 @@ This software has successfully compiled on:
 * GCC 6.3.0
 * clang 6.0.0
 
-Because `gcc` and `clang` use different libraries to handle filesystem. The compilation commands will be different.
-
-To compile the program (for GCC):
+To compile the program:
 
 ```
 git clone https://github.com/Shians/fastq-demultiplex.git
 cd fastq-demultiplex
-make   # if using gcc
-```
-
-To compile the program (for clang):
-
-```
-git clone https://github.com/Shians/fastq-demultiplex.git
-cd fastq-demultiplex
-make -f makefile.clang  # if using clang
+make
 ```
 
 The binaries will be in the `bin` folder. Manually place this in the path or run
