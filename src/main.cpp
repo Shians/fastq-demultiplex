@@ -10,7 +10,8 @@ int main(int argc, char* argv[]) {
     Timer timer;
     timer.start();
 
-    vector<string> barcodes = read_barcodes(PRG_OPTS.bc);
+    int const expected_length = PRG_OPTS.bc_end - PRG_OPTS.bc_start + 1;
+    vector<string> barcodes = read_barcodes(PRG_OPTS.bc, expected_length);
     sort(barcodes.begin(), barcodes.end());
 
     demultiplex(barcodes);
