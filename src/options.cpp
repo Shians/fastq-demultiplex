@@ -56,6 +56,11 @@ void check_args() {
         folder_missing = true;
     }
 
+    if (!fs::exists(PRG_OPTS.bc)) {
+        std::cerr << fmt::format("barcode file does not exist: {}\n", PRG_OPTS.bc)  << std::endl;
+        files_missing = true;
+    }
+
     if (files_missing) {
         exit(EXIT_FAILURE);
     }
@@ -63,6 +68,11 @@ void check_args() {
     if (folder_missing) {
         std::cout << fmt::format("creating directory: {}\n", PRG_OPTS.outdir)  << std::endl;
         fs::create_directory(PRG_OPTS.outdir);
+    }
+
+    if (PRG_OPTS.bc_end < PRG_OPTS.bc_start) {
+        std::cerr << fmt::format("bc_start: {} cannot be greater than bc_end: {}", PRG_OPTS.bc_start, PRG_OPTS.bc_end);
+        exit(EXIT_FAILURE);
     }
 }
 

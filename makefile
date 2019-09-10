@@ -26,7 +26,7 @@ objects := $(addprefix src/,$(files:%.cpp=%.o))
 
 all: build
 
-debug: CPPFLAGS = -Wall -std=c++17 -I./include -Wno-unused-function -Wno-sign-compare -pg -D_DEBUG
+debug: CPPFLAGS = -Wall -std=c++17 -I./include -Wno-unused-function -Wno-sign-compare -O0 -g -D_DEBUG
 debug: build
 
 build: bin/$(PROG_NAME)
