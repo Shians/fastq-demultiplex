@@ -50,6 +50,6 @@ Files will be created for each entry in `sample_index.csv`, all reads with no ba
 ## Warnings
 
 * On MacOS the number of files that can be opened by `terminal` is limited to 256, this program will fail silently and output fewer than expected files.
-    * Easiest way to fix this is by installing iTerm2 and running this program inside.
+    * Easiest way to fix this is by installing iTerm2 and running this program inside. **NOTE** iTerm versions after 3.2.9 have set the file limit to match the macOS default of 256. For more than 128 barcodes, you will need to use an older version from [here](https://www.iterm2.com/downloads.html).
     * Check your files open limit using `ulimit -n`.
 * This is still a work in progress, please report any bugs you find using the issues tab.
