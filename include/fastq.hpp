@@ -77,10 +77,6 @@ class FastqFile {
             FastqRecord record;
             int l = kseq_read(_seq);
 
-#ifdef _DEBUG
-            std::cout << l << "\n";
-#endif
-
             record.name = _seq->name.s;
             record.comment = _seq->comment.s;
             record.seq = _seq->seq.s;
