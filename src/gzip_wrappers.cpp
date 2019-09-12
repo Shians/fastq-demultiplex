@@ -4,7 +4,12 @@ using std::string;
 
 // open gzip file
 gzFile gzip_open(string const &filename, string const &mode) {
-    return gzopen(filename.c_str(), mode.c_str());
+    gzFile fp = gzopen(filename.c_str(), mode.c_str());
+    if (!fp) {
+        std::cerr << fmt::format("Failed to open {}", filename) << "\n";
+        exit(EXIT_FAILURE);
+    }
+    return fp;
 }
 
 // close gzip file

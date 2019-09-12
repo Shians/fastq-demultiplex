@@ -6,7 +6,7 @@ namespace fs = boost::filesystem;
 
 void parse_args(int &argc, char *argv[]) {
     try {  
-        TCLAP::CmdLine cmd("Command description message", ' ', "0.9.2");
+        TCLAP::CmdLine cmd("Command description message", ' ', "0.9.3");
 
         // arguments are pushed into order, so inserted from last to first
         int_arg complvl("z", "complvl", "compression level", false, 9, "int", cmd);

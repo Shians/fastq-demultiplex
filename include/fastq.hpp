@@ -4,6 +4,9 @@
 #include <sstream>
 #include <zlib.h>
 #include <kseq.h>
+#include <fmt/format.h>
+
+#include "gzip_wrappers.hpp"
 
 KSEQ_INIT(gzFile, gzread);
 
@@ -61,7 +64,7 @@ class FastqFile {
         FastqFile(std::string filename) {
             _filename = filename;
             std::cout << "reading from " << filename << "\n";
-            _fp = gzopen(_filename.c_str(), "r");
+            _fp = gzip_open(_filename, "r");
             _seq = kseq_init(_fp);
         }
 
@@ -73,6 +76,10 @@ class FastqFile {
         FastqRecord get_record(void) {
             FastqRecord record;
             int l = kseq_read(_seq);
+
+#ifdef _DEBUG
+            std::cout << l << "\n";
+#endif
 
             record.name = _seq->name.s;
             record.comment = _seq->comment.s;
